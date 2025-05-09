@@ -28,7 +28,12 @@ public class RouteFinder {
 
     public List<List<Flight>> findRoutes(City startCity, City endCity){
 
+
+
         List<List<Flight>> buff = findAllRoutes(startCity, endCity);
+        if (buff.isEmpty()){
+            return buff;
+        }
         List<List<Flight>> result = new ArrayList<>(buff);
         for (List<Flight> flights : buff){
             if (flights.size() != 1) {

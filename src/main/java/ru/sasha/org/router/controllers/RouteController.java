@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import ru.sasha.org.router.dto.CityDTO;
 import ru.sasha.org.router.dto.FlightDTO;
 import ru.sasha.org.router.dto.TargetFlightDTO;
 import ru.sasha.org.router.dto.TargetRoute;
@@ -43,6 +44,8 @@ public class RouteController {
     }
 
     private FlightDTO convertToFlightDTO(Flight flight){
-        return modelMapper.map(flight, FlightDTO.class);
+        FlightDTO flightDTO = modelMapper.map(flight, FlightDTO.class);
+        flightDTO.setArrivalCity(modelMapper.map(flight.getArrivslCity(), CityDTO.class));
+        return flightDTO;
     }
 }

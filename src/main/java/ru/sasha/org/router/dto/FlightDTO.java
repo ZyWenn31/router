@@ -7,7 +7,6 @@ public class FlightDTO {
     private Date arrival;
     private CityDTO departureCity;
     private CityDTO arrivalCity;
-    private final Date durance = new Date(departure.getTime() - arrival.getTime());
 
     public Date getDeparture() {
         return departure;
@@ -41,7 +40,4 @@ public class FlightDTO {
         this.arrivalCity = arrivalCity;
     }
 
-    public Date getDurance() {
-        return durance;
-    }
 }

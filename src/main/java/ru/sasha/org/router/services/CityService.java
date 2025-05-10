@@ -3,6 +3,7 @@ package ru.sasha.org.router.services;
 import org.springframework.stereotype.Service;
 import ru.sasha.org.router.model.City;
 import ru.sasha.org.router.repository.CityRepository;
+import ru.sasha.org.router.util.exceptions.CityNotFoundException;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class CityService {
     }
 
     public City findCityByNAme(String cityTame){
-        return cityRepository.findByCityName(cityTame);
+        return cityRepository.findByCityName(cityTame)
+                .orElseThrow(()-> new CityNotFoundException("City with name '" + cityTame + "' not found"));
     }
 }

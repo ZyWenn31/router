@@ -1,5 +1,7 @@
 package ru.sasha.org.router.dto;
 
+import ru.sasha.org.router.util.FlightType;
+
 import java.util.Date;
 
 public class FlightDTO {
@@ -7,6 +9,7 @@ public class FlightDTO {
     private Date arrival;
     private CityDTO departureCity;
     private CityDTO arrivalCity;
+    private FlightType flightType;
 
     public Date getDeparture() {
         return departure;
@@ -40,4 +43,11 @@ public class FlightDTO {
         this.arrivalCity = arrivalCity;
     }
 
+    public FlightType getFlightType() {
+        return flightType;
+    }
+
+    public void setFlightType(FlightType flightType) {
+        this.flightType = flightType;
+    }
 }

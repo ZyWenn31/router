@@ -19,7 +19,7 @@ public class TargetRoute {
     private Date departure;
 
     @NotNull(message = "Flight type must not be null")
-    private FlightType type;
+    private String type;
 
     public CityDTO getDepartureCity() {
         return departureCity;
@@ -45,11 +45,11 @@ public class TargetRoute {
         this.departure = departure;
     }
 
-    public FlightType getType() {
+    public @NotNull(message = "Flight type must not be null") String getType() {
         return type;
     }
 
-    public void setType(FlightType type) {
+    public void setType(@NotNull(message = "Flight type must not be null") String type) {
         this.type = type;
     }
 }

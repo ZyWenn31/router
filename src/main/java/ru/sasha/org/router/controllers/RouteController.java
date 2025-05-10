@@ -12,10 +12,7 @@ import ru.sasha.org.router.dto.RouteDTO;
 import ru.sasha.org.router.dto.TargetFlightDTO;
 import ru.sasha.org.router.dto.TargetRoute;
 import ru.sasha.org.router.services.FlightService;
-import ru.sasha.org.router.util.exceptions.CityNotFoundException;
-import ru.sasha.org.router.util.exceptions.CityNotValidException;
-import ru.sasha.org.router.util.exceptions.CreateMessageError;
-import ru.sasha.org.router.util.exceptions.ErrorResponse;
+import ru.sasha.org.router.util.exceptions.*;
 
 import java.util.List;
 
@@ -47,6 +44,13 @@ public class RouteController {
 
     @ExceptionHandler
     private ResponseEntity<ErrorResponse> CityNotValid(CityNotValidException e){
+        ErrorResponse response = new ErrorResponse(e.getMessage(), System.currentTimeMillis());
+
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler
+    private ResponseEntity<ErrorResponse> RouteTypeNotFound(RouteTypeNotFindException e){
         ErrorResponse response = new ErrorResponse(e.getMessage(), System.currentTimeMillis());
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);

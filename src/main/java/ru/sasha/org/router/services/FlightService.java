@@ -7,6 +7,7 @@ import ru.sasha.org.router.model.Flight;
 import ru.sasha.org.router.repository.FlightRepository;
 import ru.sasha.org.router.util.FlightType;
 import ru.sasha.org.router.util.RouteFinder;
+import ru.sasha.org.router.util.exceptions.RouteTypeNotFindException;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,8 +35,15 @@ public class FlightService {
     }
 
     public TargetFlightDTO createTargetRoutes(TargetRoute targetRoute){
+
+        try {
+            FlightType.valueOf(targetRoute.getType());
+        } catch (IllegalArgumentException e) {
+            throw new RouteTypeNotFindException("Route type '"+ targetRoute.getType() +"' not found");
+        }
+
         RouteFinder routeFinder = new RouteFinder(cityService.findAll(),
-                findFlightsByType(targetRoute.getType()));
+                findFlightsByType(FlightType.valueOf(targetRoute.getType())));
 
         List<RouteDTO> routes = new ArrayList<>();
 

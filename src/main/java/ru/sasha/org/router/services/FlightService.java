@@ -42,13 +42,18 @@ public class FlightService {
             throw new RouteTypeNotFindException("Route type '"+ targetRoute.getType() +"' not found");
         }
 
+        return findFirstFourRoutes(targetRoute);
+
+    }
+
+    private TargetFlightDTO findFirstFourRoutes(TargetRoute targetRoute){
         RouteFinder routeFinder = new RouteFinder(cityService.findAll(),
                 findFlightsByType(FlightType.valueOf(targetRoute.getType())));
 
         List<RouteDTO> routes = new ArrayList<>();
 
         List<List<FlightDTO>> flights = routeFinder.findRoutes(cityService.findCityByNAme(targetRoute.getDepartureCity().getCityName()),
-                        cityService.findCityByNAme(targetRoute.getArrivalCity().getCityName()))
+                        cityService.findCityByNAme(targetRoute.getArrivalCity().getCityName()), targetRoute.getDeparture())
                 .stream()
                 .map(innerList -> innerList.stream()
                         .map(this::convertToFlightDTO)

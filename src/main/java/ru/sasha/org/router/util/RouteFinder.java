@@ -5,10 +5,7 @@ import ru.sasha.org.router.model.City;
 import ru.sasha.org.router.model.Flight;
 import ru.sasha.org.router.repository.FlightRepository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class RouteFinder {
@@ -26,24 +23,26 @@ public class RouteFinder {
         }
     }
 
-    public List<List<Flight>> findRoutes(City startCity, City endCity){
-
-
-
+    public List<List<Flight>> findRoutes(City startCity, City endCity, Date departure){
         List<List<Flight>> buff = findAllRoutes(startCity, endCity);
         if (buff.isEmpty()){
             return buff;
         }
         List<List<Flight>> result = new ArrayList<>(buff);
+        result.forEach(results -> results.sort(Comparator.comparing(Flight::getDeparture)));
         for (List<Flight> flights : buff){
-            if (flights.size() != 1) {
-                for (int i = 0; i < flights.size() - 1; i++) {
-                    Flight thisFlight = flights.get(i);
-                    Flight nextFlight = flights.get(i + 1);
+            if (flights.getFirst().getDeparture().getTime() < departure.getTime()){
+                result.remove(flights);
+            } else{
+                if (flights.size() != 1) {
+                    for (int i = 0; i < flights.size() - 1; i++) {
+                        Flight thisFlight = flights.get(i);
+                        Flight nextFlight = flights.get(i + 1);
 
-                    if (thisFlight.getArrival().getTime() > nextFlight.getDeparture().getTime()) {
-                        result.remove(flights);
-                        break;
+                        if (thisFlight.getArrival().getTime() > nextFlight.getDeparture().getTime()) {
+                            result.remove(flights);
+                            break;
+                        }
                     }
                 }
             }

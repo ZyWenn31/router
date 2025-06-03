@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import ru.sasha.org.router.dto.RouteDTO;
-import ru.sasha.org.router.dto.TargetFlightDTO;
 import ru.sasha.org.router.dto.TargetRoute;
 import ru.sasha.org.router.services.FlightService;
 import ru.sasha.org.router.util.exceptions.*;
 
 import java.util.List;
+
 
 @RestController
 public class RouteController {
@@ -27,7 +27,7 @@ public class RouteController {
 
     @GetMapping("/api/flights")
     public List<RouteDTO> getFlightsByInfo(@RequestBody @Valid TargetRoute targetRoute,
-                                           BindingResult bindingResult){
+                                                                     BindingResult bindingResult){
         if (bindingResult.hasErrors()){
             throw new CityNotValidException(CreateMessageError.createMessageError(bindingResult));
         }

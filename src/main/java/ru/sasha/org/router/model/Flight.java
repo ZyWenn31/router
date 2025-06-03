@@ -3,7 +3,7 @@ package ru.sasha.org.router.model;
 import jakarta.persistence.*;
 import ru.sasha.org.router.util.FlightType;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "Flight")
@@ -20,11 +20,11 @@ public class Flight {
 
     @Column(name = "departure", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private Date departure;
+    private LocalDateTime departure;
 
     @Column(name = "arrival", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private Date arrival;
+    private LocalDateTime arrival;
 
     @ManyToOne
     @JoinColumn(name = "departure_city", referencedColumnName = "city_id", nullable = false)
@@ -37,12 +37,12 @@ public class Flight {
     public Flight() {
     }
 
-    public Flight(FlightType flightType, Date departure, Date arrival, City departureCity, City arrivalCity) {
+    public Flight(FlightType flightType, City departureCity, City arrivalCity, LocalDateTime arrival, LocalDateTime departure) {
         this.flightType = flightType;
-        this.departure = departure;
-        this.arrival = arrival;
         this.departureCity = departureCity;
         this.arrivalCity = arrivalCity;
+        this.arrival = arrival;
+        this.departure = departure;
     }
 
     public int getFlightId() {
@@ -61,20 +61,24 @@ public class Flight {
         this.flightType = flightType;
     }
 
-    public Date getDeparture() {
+    public LocalDateTime getDeparture() {
         return departure;
     }
 
-    public void setDeparture(Date departure) {
+    public void setDeparture(LocalDateTime departure) {
         this.departure = departure;
     }
 
-    public Date getArrival() {
+    public LocalDateTime getArrival() {
         return arrival;
     }
 
-    public void setArrival(Date arrival) {
+    public void setArrival(LocalDateTime arrival) {
         this.arrival = arrival;
+    }
+
+    public City getArrivalCity() {
+        return arrivalCity;
     }
 
     public City getDepartureCity() {

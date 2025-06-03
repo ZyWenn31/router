@@ -9,10 +9,7 @@ import ru.sasha.org.router.util.FlightType;
 import ru.sasha.org.router.util.RouteFinder;
 import ru.sasha.org.router.util.exceptions.RouteTypeNotFindException;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,7 +26,7 @@ public class FlightService {
     }
 
     public List<Flight> findFlightsByType(FlightType flightType){
-        if (flightType == FlightType.MIX)
+        if (flightType.ordinal() == 3)
             return flightRepository.findAll();
         return flightRepository.findAllByFlightType(flightType);
     }
@@ -42,11 +39,24 @@ public class FlightService {
             throw new RouteTypeNotFindException("Route type '"+ targetRoute.getType() +"' not found");
         }
 
-        return findFirstFourRoutes(targetRoute);
-
+        return findRoutes(targetRoute);
     }
 
-    private TargetFlightDTO findFirstFourRoutes(TargetRoute targetRoute){
+    /*private Integer getPeriodOfRoute(RouteDTO routeDTO){
+        int hour = routeDTO.getDeparture().getHours();
+        if (hour >= 0 && hour <= 5){
+            return 1;
+        } else if (hour >= 6 && hour <= 11) {
+            return 2;
+        }else if(hour >= 12 && hour <= 17){
+            return 3;
+        } else if(hour >= 18 && hour <= 23){
+            return 4;
+        }
+        return 1;
+    }*/
+
+    private TargetFlightDTO findRoutes(TargetRoute targetRoute){
         RouteFinder routeFinder = new RouteFinder(cityService.findAll(),
                 findFlightsByType(FlightType.valueOf(targetRoute.getType())));
 

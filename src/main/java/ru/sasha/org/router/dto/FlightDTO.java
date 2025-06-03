@@ -2,28 +2,28 @@ package ru.sasha.org.router.dto;
 
 import ru.sasha.org.router.util.FlightType;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class FlightDTO {
-    private Date departure;
-    private Date arrival;
+    private LocalDateTime departure;
+    private LocalDateTime arrival;
     private CityDTO departureCity;
     private CityDTO arrivalCity;
     private FlightType flightType;
 
-    public Date getDeparture() {
+    public LocalDateTime getDeparture() {
         return departure;
     }
 
-    public void setDeparture(Date departure) {
+    public void setDeparture(LocalDateTime departure) {
         this.departure = departure;
     }
 
-    public Date getArrival() {
+    public LocalDateTime getArrival() {
         return arrival;
     }
 
-    public void setArrival(Date arrival) {
+    public void setArrival(LocalDateTime arrival) {
         this.arrival = arrival;
     }
 

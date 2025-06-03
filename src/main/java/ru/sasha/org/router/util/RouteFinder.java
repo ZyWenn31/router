@@ -5,6 +5,7 @@ import ru.sasha.org.router.model.City;
 import ru.sasha.org.router.model.Flight;
 import ru.sasha.org.router.repository.FlightRepository;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 
@@ -23,7 +24,7 @@ public class RouteFinder {
         }
     }
 
-    public List<List<Flight>> findRoutes(City startCity, City endCity, Date departure){
+    public List<List<Flight>> findRoutes(City startCity, City endCity, LocalDateTime departure){
         List<List<Flight>> buff = findAllRoutes(startCity, endCity);
         if (buff.isEmpty()){
             return buff;
@@ -31,7 +32,7 @@ public class RouteFinder {
         List<List<Flight>> result = new ArrayList<>(buff);
         result.forEach(results -> results.sort(Comparator.comparing(Flight::getDeparture)));
         for (List<Flight> flights : buff){
-            if (flights.getFirst().getDeparture().getTime() < departure.getTime()){
+            if (flights.getFirst().getDeparture().isBefore(departure)){
                 result.remove(flights);
             } else{
                 if (flights.size() != 1) {
@@ -39,7 +40,7 @@ public class RouteFinder {
                         Flight thisFlight = flights.get(i);
                         Flight nextFlight = flights.get(i + 1);
 
-                        if (thisFlight.getArrival().getTime() > nextFlight.getDeparture().getTime()) {
+                        if (thisFlight.getArrival().isAfter(nextFlight.getDeparture())) {
                             result.remove(flights);
                             break;
                         }

@@ -1,10 +1,8 @@
 package ru.sasha.org.router.dto;
 
-import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
-import ru.sasha.org.router.util.FlightType;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class TargetRoute {
 
@@ -16,7 +14,7 @@ public class TargetRoute {
 
     @NotNull(message = "Departure date must not be null")
     //Включить данную аннотацию после тестов: @FutureOrPresent(message = "Departure date must be in the present or future")
-    private Date departure;
+    private LocalDateTime departure;
 
     @NotNull(message = "Flight type must not be null")
     private String type;
@@ -37,11 +35,11 @@ public class TargetRoute {
         this.arrivalCity = arrivalCity;
     }
 
-    public Date getDeparture() {
+    public  LocalDateTime getDeparture() {
         return departure;
     }
 
-    public void setDeparture(Date departure) {
+    public void setDeparture( LocalDateTime departure) {
         this.departure = departure;
     }
 

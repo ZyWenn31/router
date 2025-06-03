@@ -1,21 +1,24 @@
 package ru.sasha.org.router.dto;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
 public class RouteDTO {
 
     private List<FlightDTO> flights;
-    private Date departure;
-    private Date arrival;
+    private LocalDateTime departure;
+    private LocalDateTime arrival;
     private long duration;
 
     public RouteDTO(List<FlightDTO> flights){
         this.flights = flights;
+        flights.sort(Comparator.comparing(FlightDTO::getDeparture));
         this.departure = flights.getFirst().getDeparture();
         this.arrival = flights.getLast().getArrival();
-        this.duration = Duration.between(departure.toInstant(), arrival.toInstant()).toMinutes();
+        this.duration = Duration.between(departure, arrival).toMinutes();
     }
 
     public List<FlightDTO> getFlights() {
@@ -26,19 +29,19 @@ public class RouteDTO {
         this.flights = flights;
     }
 
-    public Date getDeparture() {
+    public LocalDateTime getDeparture() {
         return departure;
     }
 
-    public void setDeparture(Date departure) {
+    public void setDeparture(LocalDateTime departure) {
         this.departure = departure;
     }
 
-    public Date getArrival() {
+    public LocalDateTime getArrival() {
         return arrival;
     }
 
-    public void setArrival(Date arrival) {
+    public void setArrival(LocalDateTime arrival) {
         this.arrival = arrival;
     }
 
